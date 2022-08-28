@@ -1,24 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import Counting1 from './counting1';
+import Counting2 from './counting2';
+import Profile from './Profile';
+import Sekolah from './Sekolah';
+import Post from './Post';
 
 function App() {
+
+    const postObject = {
+        title: "Boku no Hero",
+        body: "Anime of japan",
+    };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+    <div>
+        <Profile/>
+        <p></p>
+        <hr/>
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+        <Sekolah/>
+        <hr/>
+        <Post posting={postObject}/>
+        <hr/>
+        <Counting1/>
+        <Counting2/>
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
     </div>
+    
   );
 }
 
