@@ -1,32 +1,30 @@
-import Counting1 from './counting1';
-import Counting2 from './counting2';
-import Profile from './Profile';
-import Sekolah from './Sekolah';
-import Post from './Post';
+import { Route, Routes} from 'react-router-dom'
+import Login from './pages/Login'
+import Register from './pages/Register'
+import Blogs from './pages/Blogs'
+import CreatePosts from './pages/CreatePosts'
+import Dashboard from './pages/Dashboard'
+import DetailPost from './pages/DetailPost'
+import Home from './pages/Home'
+import AppLayouts from './components/Layout'
+//import Navbar from './components/Navbar'
+
 
 function App() {
-
-    const postObject = {
-        title: "Boku no Hero",
-        body: "Anime of japan",
-    };
-
   return (
-    <div>
-        <Profile/>
-        <p></p>
-        <hr/>
-        <p>
-        <Sekolah/>
-        <hr/>
-        <Post posting={postObject}/>
-        <hr/>
-        <Counting1/>
-        <Counting2/>
-        </p>
-    </div>
-    
-  );
-}
 
-export default App;
+    <AppLayouts>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/blogs" element={<Blogs />} />
+      <Route path="/blogs/:postId" element={<DetailPost />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/registration" element={<Register />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/posts/create" element={<CreatePosts />} />
+    </Routes>
+  </AppLayouts>
+      
+)}
+
+export default App
