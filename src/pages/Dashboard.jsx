@@ -1,60 +1,87 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import jwt_decode from "jwt-decode";
 
-// Style
-import main from "../style/main.css";
-import nav from "../style/nav.css";
-import spacing from "../style/spacing.css";
-
-const AppLayouts = (props) => {
-  const [cookies, setCookies, removeCookie] = useCookies(["userId"]);
+const Dashboard = () => {
+  const [cookies] = useCookies(["accessToken"]);
+  console.log(cookies.userId);
+  const [posts, setPosts] = useState([]);
   const navigate = useNavigate();
 
-  const logout = () => {
-    removeCookie(["accessToken"]);
-    removeCookie(["userId"]);
-    removeCookie(["email"]);
+  const fetchPosts = () => {
+    axios
+      .get(
+        `https://binar-blog-app.herokuapp.com/posts?writer=${cookies.userId}`
+      )
+      .then((res) => {
+        const listPosts = res.data;
+        setPosts(listPosts);
+      })
+      .catch((err) => console.error(err));
   };
 
+  const handleClick = (id) => {
+    navigate(`/blogs/${id}`);
+  };
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
   return (
-    <div className="mainWrapper">
-      <header>
-        <div className="appTitle">My React App</div>
-      </header>
-      <nav className="navbar">
-        <div className="container">
-          <ul className="ptb1">
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/blogs">Blogs</Link>
-            </li>
-            <li style={{ display: cookies.accessToken ? "none" : "" }}>
-              <Link to="/registration">Registration</Link>
-            </li>
-            <li style={{ display: cookies.accessToken ? "" : "none" }}>
-              <Link to="/dashboard">Dashboard</Link>
-            </li>
-            <li style={{ display: cookies.accessToken ? "none" : "" }}>
-              <Link to="/login">Login</Link>
-            </li>
-            <li style={{ display: cookies.accessToken ? "" : "none" }}>
-              <Link to="/" onClick={logout}>
-                Logout
-              </Link>
-            </li>
-          </ul>
+    <>
+      <div className="mb3">
+        <h1 className="h1Title ptb3">My Dashboard</h1>
+        <div className="container h1Title">
+          <button style={{ padding: "7.5px", background: "#ffdba4" }}>
+            <Link to="/posts/create" style={{ textDecoration: "none" }}>
+              Create New Post
+            </Link>
+          </button>
         </div>
-      </nav>
-      <section>{props.children}</section>
-      <footer>
-        <div className="footer ptb3">Footer</div>
-      </footer>
-    </div>
+        <div
+          className="h1Title ptb3"
+          style={{ display: posts.length < 1 ? "" : "none" }}
+        >
+          Post not found!
+        </div>
+
+        <div className="boxWrapper">
+          {posts
+            .sort((a, b) => b.id - a.id)
+            .map((post) => {
+              return (
+                <div key={post.id} className="boxStyle">
+                  <div className="imageArticle">
+                    <div
+                      className="image"
+                      style={{
+                        backgroundImage: `url(${post.image})`,
+                      }}
+                    ></div>
+                  </div>
+                  <div className="postMeta">
+                    <Link to="/" className="category">
+                      {(post.category = "Category")}
+                    </Link>
+                  </div>
+                  <h3 className="title">
+                    <a href={`/blogs/${post.id}`}>{post.title}</a>
+                  </h3>
+                  <div className="body-posts p3">
+                    <p>{post.body}</p>
+                  </div>
+                  <div className="p3">
+                    <Link to={`/posts/${post.id}/edit`}>Edit</Link>
+                  </div>
+                </div>
+              );
+            })}
+        </div>
+      </div>
+    </>
   );
 };
 
-export default AppLayouts;
+export default Dashboard;

@@ -19,7 +19,7 @@ const Login = () => {
             .then((res) => {
                 const resAccesToken = res.data.accessToken;
                 setCookies("accessToken",resAccesToken, {maxAge: 7})
-                navigate ("/")
+                navigate ("/dashboard")
             });
     }
 

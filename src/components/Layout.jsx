@@ -22,9 +22,7 @@ const AppLayouts = (props) => {
       <nav className="navbar">
         <div className="container">
           <ul className="ptb1">
-            <li>
-              <Link to="/">Home</Link>
-            </li>
+            
             <li>
               <Link to="/blogs">Blogs</Link>
             </li>

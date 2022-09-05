@@ -5,7 +5,6 @@ import Blogs from './pages/Blogs'
 import CreatePosts from './pages/CreatePosts'
 import Dashboard from './pages/Dashboard'
 import DetailPost from './pages/DetailPost'
-import Home from './pages/Home'
 import AppLayouts from './components/Layout'
 //import Navbar from './components/Navbar'
 
@@ -15,7 +14,7 @@ function App() {
 
     <AppLayouts>
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<Blogs />} />
       <Route path="/blogs" element={<Blogs />} />
       <Route path="/blogs/:postId" element={<DetailPost />} />
       <Route path="/login" element={<Login />} />
