@@ -1,16 +1,12 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import jwt_decode from "jwt-decode";
 
-// Style
-import main from "../style/main.css";
-import nav from "../style/nav.css";
-import spacing from "../style/spacing.css";
+
 
 const AppLayouts = (props) => {
   const [cookies, setCookies, removeCookie] = useCookies(["userId"]);
-  const navigate = useNavigate();
+
 
   const logout = () => {
     removeCookie(["accessToken"]);
