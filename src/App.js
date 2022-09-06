@@ -6,6 +6,7 @@ import CreatePosts from './pages/CreatePosts'
 import Dashboard from './pages/Dashboard'
 import DetailPost from './pages/DetailPost'
 import AppLayouts from './components/Layout'
+import EditPost from './pages/EditPost'
 //import Navbar from './components/Navbar'
 
 
