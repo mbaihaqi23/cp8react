@@ -1,13 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
-
-export default function CreatePosts() {
+const EditPost = () => {
+    const { postId } = useParams();
     const [values, setValues] = useState({});
     const navigate = useNavigate();
     const [cookies] = useCookies(["accessToken"]);
+  
+    useEffect(() => {
+      axios
+        .get(`https://binar-blog-app.herokuapp.com/posts/${postId}`)
+        .then((res) => setValues(res.data))
+        .catch((err) => console.error(err));
+    }, []);
   
     const handleChange = (e) => {
       setValues({ ...values, [e.target.name]: e.target.value });
@@ -17,7 +24,7 @@ export default function CreatePosts() {
     const handleSubmit = (e) => {
       e.preventDefault();
       axios
-        .post("https://binar-blog-app.herokuapp.com/posts", values, {
+        .put(`https://binar-blog-app.herokuapp.com/posts/${postId}`, values, {
           headers: { Authorization: `Bearer ${cookies.accessToken}` },
         })
         .then((res) => navigate("/dashboard"))
@@ -25,7 +32,7 @@ export default function CreatePosts() {
           alert("something wrong, pelase relogin");
           navigate("/login");
         });
-    };
+    };  
 
   return (
     <section className="hero has-background-grey-light is-fullheight is-fullwidth">
@@ -34,27 +41,27 @@ export default function CreatePosts() {
             <div className="columns is-centered">
                 <div className="column is-4-desktop">
                 <form className="box" onSubmit={handleSubmit}>
-                <h1>Create Post</h1>
+                <h1>Update Post</h1>
                     <div className="field mt-5">
                             <label className="label">Title</label>
                             <div className="controls">
-                                <input className="input" placeholder="Title" id="title" name="title" type="text" onChange={handleChange} />
+                                <input className="input" placeholder="Title" id="title" name="title" type="text" value={values.title} onChange={handleChange}/>
                             </div>
                         </div>
                         <div className="field mt-3">
                             <label className="label">Image</label>
                             <div className="controls">
-                                <input className="input" placeholder="Link url image from another web" id="image" name="image" type="text" onChange={handleChange} />
+                                <input className="input" placeholder="Link url image from another web" id="image" name="image" type="text" value={values.image} onChange={handleChange}/>
                             </div>
                         </div>
                         <div className="field mt-3">
                             <label className="label">Body</label>
                             <div className="controls">
-                                <input className="textarea" placeholder="Post content" id="body" name="body" type="text" rows="10" cols="50" value={values.body} onChange={handleChange}/>
+                                <input className="textarea" placeholder="Post content" id="body" name="body" type="text" rows="10" cols="50" value={values.body} onChange={handleChange} />
                             </div>
                         </div>
                         <div className="field mt-5">
-                            <button type="submit" className="button is-success is-fullwidth">Submit</button>
+                            <button className="button is-success is-fullwidth">Submit</button>
                         </div>
                 </form>
                 </div>
@@ -64,3 +71,5 @@ export default function CreatePosts() {
     </section>
   )
 }
+
+export default EditPost;

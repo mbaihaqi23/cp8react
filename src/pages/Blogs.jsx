@@ -27,9 +27,9 @@ const Blogs = () => {
     fetchPosts();
   }, []);
 
-    const convertElipsisBody = (body) => {
-    return body.length > 100 ? body.slice(0,100) + "..." : body
-        }
+    // const convertElipsisBody = (body) => {
+    // return body.length > 100 ? body.slice(0,100) + "..." : body
+    //     }
 
 
   return (
@@ -39,8 +39,8 @@ const Blogs = () => {
                 {posts.map((post) => {
                     return (
                         <div className="col" key={post.id}>
-                        <Card style={{ width: '20rem', height: '18rem' }} className="m-2">
-                        <Card.Img style={{backgroundImage: `url(${post.image})`, height: '12rem'}} variant="top" src="holder.js/100px180" />
+                        <Card style={{ width: '30rem', height: '20rem' }} className="m-2">
+                        <Card.Img style={{backgroundImage: `url(${post.image})`, height: '15rem'}} variant="top" src="holder.js/100px180" />
                             <Card.Body>
                             <Card.Title style={{ height: '1rem', display: 'flex', alignItems: 'center'}}><a href={`/blogs/${post.id}`}>{post.title}</a></Card.Title>
                             <Card.Text>
