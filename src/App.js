@@ -21,6 +21,7 @@ function App() {
       <Route path="/registration" element={<Register />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/posts/create" element={<CreatePosts />} />
+      <Route path="/posts/:postId/edit" element={<EditPost />} />
     </Routes>
   </AppLayouts>
       
