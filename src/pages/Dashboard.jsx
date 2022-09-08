@@ -2,7 +2,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import Card from 'react-bootstrap/Card';
+import { Card } from "react-bootstrap";
+
 
 const Dashboard = () => {
   const [cookies] = useCookies(["accessToken"]);
@@ -22,9 +23,6 @@ const Dashboard = () => {
       .catch((err) => console.error(err));
   };
 
-  const handleClick = (id) => {
-    navigate(`/blogs/${id}`);
-  };
 
   useEffect(() => {
     fetchPosts();
