@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom"
+import jwtDecode from "jwt-decode";
 
 const Login = () => {
     const [values, setValues] = useState({});
@@ -9,19 +10,45 @@ const Login = () => {
     const navigate = useNavigate()
 
     const handleOnChange = (e) => {
-        setValues({...values, [e.target.type]: e.target.value})
+        setValues({...values, [e.target.name]: e.target.value})
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         axios
-            .post("https:binar-blog-app.herokuapp.com/login", values)
-            .then((res) => {
-                const resAccesToken = res.data.accessToken;
-                setCookies("accessToken",resAccesToken, {maxAge: 7})
-                navigate ("/dashboard")
-            });
-    }
+          .post("https:binar-blog-app.herokuapp.com/login", values)
+          .then((res) => {
+            const { accessToken} = res.data;
+            if(accessToken) {
+                setCookies("accessToken", accessToken, { maxAge: 2000 });
+                const user = jwtDecode(accessToken);
+                setCookies("user", user, { maxAge: 60000 });
+                navigate('/dashboard');  
+                // console.log(cookies)
+            } else {
+                alert("login failed")
+            }
+            // console.log(res.data)
+          })
+          .catch((err) => alert("login failed"));
+      };
+
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     axios
+    //         .post("https:binar-blog-app.herokuapp.com/login", values)
+    //         .then((res) => {
+    //         const { accessToken} = res.data;
+    //         if(accessToken) {
+    //             setCookies("accessToken", accessToken, { maxAge: 2000 });
+    //             const user = jwtDecode(accessToken);
+    //             setCookies("user", user, { maxAge: 60000 });
+    //             navigate('/myposts');  
+    //             // console.log(cookies)
+    //         } else {
+    //             alert("login failed")
+    //         }
+    // }
 
 
   return (
@@ -35,13 +62,13 @@ const Login = () => {
                         <div className="field mt-5">
                             <label className="label">Email or Username</label>
                             <div className="controls">
-                                <input type="email" className="input" placeholder="Username" onChange={handleOnChange}/>
+                                <input name="email" type="email"className="input" placeholder="Username" onChange={handleOnChange}/>
                             </div>
                         </div>
                         <div className="field mt-5">
                             <label className="label">Password</label>
                             <div className="controls">
-                                <input type="password" className="input" placeholder="*****" onChange={handleOnChange}/>
+                                <input name="password" type="password" className="input" placeholder="*****" onChange={handleOnChange}/>
                             </div>
                         </div>
                         <div className="field mt-5">

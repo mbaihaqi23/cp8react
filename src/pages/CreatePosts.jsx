@@ -3,7 +3,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
-
 export default function CreatePosts() {
     const [values, setValues] = useState({});
     const navigate = useNavigate();
@@ -38,19 +37,27 @@ export default function CreatePosts() {
                     <div className="field mt-5">
                             <label className="label">Title</label>
                             <div className="controls">
-                                <input className="input" placeholder="Title" id="title" name="title" type="text" onChange={handleChange} />
+                            <input id="title" name="title" type="text" onChange={handleChange} />
                             </div>
                         </div>
                         <div className="field mt-3">
                             <label className="label">Image</label>
                             <div className="controls">
-                                <input className="input" placeholder="Link url image from another web" id="image" name="image" type="text" onChange={handleChange} />
+                            <input id="image" name="image" type="text" onChange={handleChange} />
                             </div>
                         </div>
                         <div className="field mt-3">
                             <label className="label">Body</label>
                             <div className="controls">
-                                <input className="textarea" placeholder="Post content" id="body" name="body" type="text" rows="10" cols="50" value={values.body} onChange={handleChange}/>
+                            <textarea
+                              id="body"
+                              name="body"
+                              type="text"
+                              rows="10"
+                              cols="50"
+                              value={values.body}
+                              onChange={handleChange}
+                              ></textarea>
                             </div>
                         </div>
                         <div className="field mt-5">

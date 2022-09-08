@@ -61,7 +61,9 @@ const Dashboard = () => {
                             <Card.Text>
                                 {post.body}
                             </Card.Text>
-                            <Card.Link to={`/posts/${post.id}/edit`}>Edit</Card.Link>
+                            <div className="p3">
+                              <Link to={`/posts/${post.id}/edit`}>Edit</Link>
+                            </div>
                             </Card.Body>
                         </Card>
                         </div>
